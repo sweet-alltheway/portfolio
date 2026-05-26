@@ -1,0 +1,714 @@
+﻿<!DOCTYPE html>
+<html lang="en" x-data="app()" :class="{'dark':dark}" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jemuel — Portfolio">
+  <meta name="keywords" content="Jemuel Libago, web developer, UI/UX designer, full stack, portfolio, DNSC">
+  <meta name="author" content="Jemuel Libago">
+  <meta property="og:title" content="Jemuel - Portfolio">
+  <meta property="og:description"
+    content="Portfolio of Jemuel Libago — web design, full-stack development, UI/UX, AI, and visual content.">
+  <meta property="og:type" content="website">
+  <title>Jemuel - Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { display: ['PT Sans', 'sans-serif'], body: ['DM Sans', 'sans-serif'] },
+          colors: {
+            accent: '#546B41',
+            'accent-light': '#99AD7A',
+            olive: '#546B41',
+            sage: '#99AD7A',
+            sand: '#DCCCAC',
+            cream: '#FFF8EC',
+            ink: '#3D4F30',
+            'dark-bg': '#000000',
+            'dark-surface': '#141414'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body class="bg-cream dark:bg-dark-bg text-ink dark:text-cream antialiased">
+
+  <!-- === NAV === -->
+  <header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+    :class="sc?'bg-cream/90 dark:bg-dark-bg/90 backdrop-blur-md shadow-sm shadow-black/5':''">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+
+      <a href="#hero" class="font-display font-bold text-xl tracking-tight relative z-10">
+        <span class="text-ink dark:text-cream">jem</span><span class="text-accent">uel</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+        <li><a href="#services"
+            class="nl text-olive/70 dark:text-sand hover:text-ink dark:hover:text-cream transition-colors"
+            :class="s==='services'?'on !text-ink dark:!text-cream':''">Services</a></li>
+        <li><a href="#work"
+            class="nl text-olive/70 dark:text-sand hover:text-ink dark:hover:text-cream transition-colors"
+            :class="s==='work'?'on !text-ink dark:!text-cream':''">Work</a></li>
+        <li><a href="#about"
+            class="nl text-olive/70 dark:text-sand hover:text-ink dark:hover:text-cream transition-colors"
+            :class="s==='about'?'on !text-ink dark:!text-cream':''">About</a></li>
+        <li><a href="#certificates"
+            class="nl text-olive/70 dark:text-sand hover:text-ink dark:hover:text-cream transition-colors"
+            :class="s==='certificates'?'on !text-ink dark:!text-cream':''">Certificates</a></li>
+        <li><a href="#contact"
+            class="nl text-olive/70 dark:text-sand hover:text-ink dark:hover:text-cream transition-colors"
+            :class="s==='contact'?'on !text-ink dark:!text-cream':''">Contact</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <!-- dark toggle -->
+        <button @click="dark=!dark"
+          class="w-9 h-9 flex items-center justify-center rounded-full border border-sand dark:border-neutral-700 hover:bg-sand/40 dark:hover:bg-dark-surface transition-colors"
+          :aria-label="dark?'Light mode':'Dark mode'">
+          <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+          <svg x-show="dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+        </button>
+        <!-- hire me -->
+        <a href="#contact"
+          class="hidden md:inline-flex items-center gap-2 shimmer bg-accent text-cream text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
+          Hire me <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <!-- hamburger -->
+        <button @click="mm=!mm"
+          class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-sand dark:border-neutral-700"
+          :aria-expanded="mm" aria-label="Toggle menu">
+          <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg x-show="mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- mobile menu -->
+    <div x-show="mm" x-cloak x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-cream dark:bg-dark-bg border-t border-sand dark:border-neutral-800">
+      <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
+        <li><a href="#services" @click="mm=false"
+            class="block text-ink dark:text-sand hover:text-accent transition-colors">Services</a></li>
+        <li><a href="#work" @click="mm=false"
+            class="block text-ink dark:text-sand hover:text-accent transition-colors">Work</a></li>
+        <li><a href="#about" @click="mm=false"
+            class="block text-ink dark:text-sand hover:text-accent transition-colors">About</a></li>
+        <li><a href="#certificates" @click="mm=false"
+            class="block text-ink dark:text-sand hover:text-accent transition-colors">Certificates</a></li>
+        <li><a href="#contact" @click="mm=false"
+            class="block text-ink dark:text-sand hover:text-accent transition-colors">Contact</a></li>
+        <li class="pt-2 border-t border-sand dark:border-neutral-800">
+          <a href="#contact" @click="mm=false"
+            class="inline-flex shimmer bg-accent text-cream font-medium text-sm px-5 py-2.5 rounded-full">Hire me →</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- === HERO === -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+      <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"
+        aria-hidden="true"></div>
+      <div
+        class="absolute bottom-1/4 left-0 w-64 h-64 bg-sage/20 dark:bg-neutral-800/30 rounded-full blur-3xl pointer-events-none"
+        aria-hidden="true"></div>
+
+      <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+          <div>
+            <p class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for work</p>
+            <h1
+              class="reveal d1 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-ink dark:text-cream mb-6">
+              Hi, I'm <span class="text-accent">Jemuel</span>
+            </h1>
+            <p
+              class="reveal d2 text-lg md:text-xl text-olive/70 dark:text-sand font-light leading-relaxed max-w-2xl mb-10">
+              Hi, I'm Jemuel — a passionate Web-Based Designer and Full Stack Developer specializing in creating modern,
+              user-friendly, and functional digital experiences. I work across UI/UX design, front-end and back-end
+              development, AI-powered solutions, and visual content creation. I focus on building clean, responsive, and
+              accessible websites and systems that combine creativity, performance, and innovation.
+            </p>
+            <div class="reveal d3 flex flex-wrap gap-4">
+              <a href="#work"
+                class="shimmer inline-flex items-center gap-2 bg-olive dark:bg-cream text-cream dark:text-ink font-medium px-7 py-3.5 rounded-full hover:bg-olive/90 dark:hover:bg-sand transition-colors text-sm">
+                View my work
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <a href="#contact"
+                class="inline-flex items-center gap-2 border border-sand dark:border-neutral-600 text-ink dark:text-sand font-medium px-7 py-3.5 rounded-full hover:bg-sand/40 dark:hover:bg-dark-surface transition-colors text-sm">Get
+                in touch</a>
+            </div>
+          </div>
+
+          <div class="reveal d2 flex justify-center md:justify-end">
+            <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+              <div class="pf w-full h-full rounded-3xl">
+                <img src="img/prof.png" alt="Jemuel Libago" loading="eager">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === SERVICES === -->
+    <section id="services" class="py-24 bg-sand/30 dark:bg-dark-surface/40">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-14">
+          <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">What I do</p>
+          <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-ink dark:text-cream">Services</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <article
+            class="service-card reveal d1 card-h group bg-cream dark:bg-dark-surface rounded-2xl p-8 border border-sand dark:border-neutral-700">
+            <div
+              class="service-card__icon w-12 h-12 flex items-center justify-center bg-sand/50 dark:bg-neutral-800 rounded-xl mb-6 transition-colors">
+              <svg class="w-6 h-6 text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+              </svg>
+            </div>
+            <h3
+              class="service-card__title font-display font-bold text-xl text-ink dark:text-cream mb-3 transition-colors">
+              Web-Based Designer</h3>
+            <p class="service-card__desc text-sm text-olive/70 dark:text-sand leading-relaxed transition-colors">Modern,
+              responsive layouts and visual systems
+              for the web — from concept to polished, user-focused interfaces.</p>
+          </article>
+
+          <article
+            class="service-card reveal d2 card-h group bg-cream dark:bg-dark-surface rounded-2xl p-8 border border-sand dark:border-neutral-700">
+            <div
+              class="service-card__icon w-12 h-12 flex items-center justify-center bg-sand/50 dark:bg-neutral-800 rounded-xl mb-6 transition-colors">
+              <svg class="w-6 h-6 text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <h3
+              class="service-card__title font-display font-bold text-xl text-ink dark:text-cream mb-3 transition-colors">
+              Web Developer</h3>
+            <p class="service-card__desc text-sm text-olive/70 dark:text-sand leading-relaxed transition-colors">Clean,
+              performant front-end builds with
+              semantic HTML, Tailwind CSS, and interactive experiences that ship fast.</p>
+          </article>
+
+          <article
+            class="service-card reveal d3 card-h group bg-cream dark:bg-dark-surface rounded-2xl p-8 border border-sand dark:border-neutral-700">
+            <div
+              class="service-card__icon w-12 h-12 flex items-center justify-center bg-sand/50 dark:bg-neutral-800 rounded-xl mb-6 transition-colors">
+              <svg class="w-6 h-6 text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2" />
+              </svg>
+            </div>
+            <h3
+              class="service-card__title font-display font-bold text-xl text-ink dark:text-cream mb-3 transition-colors">
+              UI/UX Designer</h3>
+            <p class="service-card__desc text-sm text-olive/70 dark:text-sand leading-relaxed transition-colors">
+              Wireframes to high-fidelity prototypes in
+              Figma — intuitive flows and interfaces that put usability first.</p>
+          </article>
+
+          <article
+            class="service-card reveal d4 card-h group bg-cream dark:bg-dark-surface rounded-2xl p-8 border border-sand dark:border-neutral-700">
+            <div
+              class="service-card__icon w-12 h-12 flex items-center justify-center bg-sand/50 dark:bg-neutral-800 rounded-xl mb-6 transition-colors">
+              <svg class="w-6 h-6 text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-7-4h.01M12 16h.01" />
+              </svg>
+            </div>
+            <h3
+              class="service-card__title font-display font-bold text-xl text-ink dark:text-cream mb-3 transition-colors">
+              Back-End Developer</h3>
+            <p class="service-card__desc text-sm text-olive/70 dark:text-sand leading-relaxed transition-colors">APIs,
+              databases, and server-side logic —
+              secure, scalable foundations that power your apps and websites.</p>
+          </article>
+
+          <article
+            class="service-card reveal reveal-delay-5 card-h group bg-cream dark:bg-dark-surface rounded-2xl p-8 border border-sand dark:border-neutral-700">
+            <div
+              class="service-card__icon w-12 h-12 flex items-center justify-center bg-sand/50 dark:bg-neutral-800 rounded-xl mb-6 transition-colors">
+              <svg class="w-6 h-6 text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h3
+              class="service-card__title font-display font-bold text-xl text-ink dark:text-cream mb-3 transition-colors">
+              AI Developer</h3>
+            <p class="service-card__desc text-sm text-olive/70 dark:text-sand leading-relaxed transition-colors">
+              AI-powered features and integrations —
+              smart workflows, automation, and tools that enhance user experience.</p>
+          </article>
+
+          <article
+            class="service-card reveal reveal-delay-6 card-h group bg-cream dark:bg-dark-surface rounded-2xl p-8 border border-sand dark:border-neutral-700">
+            <div
+              class="service-card__icon w-12 h-12 flex items-center justify-center bg-sand/50 dark:bg-neutral-800 rounded-xl mb-6 transition-colors">
+              <svg class="w-6 h-6 text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3
+              class="service-card__title font-display font-bold text-xl text-ink dark:text-cream mb-3 transition-colors">
+              Visual Content Creator</h3>
+            <p class="service-card__desc text-sm text-olive/70 dark:text-sand leading-relaxed transition-colors">
+              Graphics, social visuals, and brand assets
+              — cohesive imagery that supports your message across every channel.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === WORK === -->
+    <section id="work" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-14">
+          <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Portfolio</p>
+          <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-ink dark:text-cream">Selected work</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template x-for="(item, index) in workItems" :key="item.id">
+            <article @click="openWork(item)" @keydown.enter.prevent="openWork(item)"
+              @keydown.space.prevent="openWork(item)" tabindex="0" role="button" :aria-label="'View ' + item.title"
+              class="card-h reveal group flex flex-col rounded-2xl overflow-hidden bg-sand/40 dark:bg-dark-surface border border-sand dark:border-neutral-700 hover:border-accent cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream dark:focus-visible:ring-offset-dark-bg"
+              :class="index === 0 ? 'd1' : index === 1 ? 'd2' : index === 2 ? 'd3' : index === 3 ? 'd4' : index === 4 ? 'reveal-delay-5' : 'reveal-delay-6'">
+              <div class="work-media relative">
+                <img :src="item.src" :alt="item.title" loading="lazy">
+                <span
+                  class="absolute bottom-3 right-3 bg-olive/90 text-cream text-xs font-medium px-2.5 py-1 rounded-full pointer-events-none">Click
+                  to enlarge</span>
+              </div>
+              <div class="p-6 flex flex-col flex-1">
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <template x-for="tag in item.tags" :key="tag">
+                    <span class="text-xs px-3 py-1 rounded-full"
+                      :class="tag === item.tags[0] ? 'bg-sand/50 dark:bg-neutral-800 text-accent border border-sand dark:border-neutral-600' : 'bg-sand/60 dark:bg-neutral-800 text-olive/80 dark:text-sand'"
+                      x-text="tag"></span>
+                  </template>
+                </div>
+                <h3 class="font-display font-bold text-lg text-ink dark:text-cream mb-2" x-text="item.title"></h3>
+                <p class="text-sm text-olive/70 dark:text-sand leading-relaxed flex-1" x-text="item.description"></p>
+              </div>
+            </article>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- === ABOUT === -->
+    <section id="about" class="py-24 bg-sand/30 dark:bg-dark-surface/40">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+
+          <div class="reveal order-2 md:order-1">
+            <div class="pf w-full aspect-square max-w-sm mx-auto rounded-3xl">
+              <img src="img/prof1.png" alt="Jemuel" loading="lazy">
+            </div>
+          </div>
+
+          <div class="order-1 md:order-2">
+            <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">About me</p>
+            <h2
+              class="reveal d1 font-display font-bold text-4xl md:text-5xl text-ink dark:text-cream leading-tight mb-6">
+              A bit about<br>who I am</h2>
+            <p class="reveal d2 text-olive/70 dark:text-sand leading-relaxed mb-4">
+              I'm Jemuel, a student and aspiring web developer and designer passionate about building modern digital
+              experiences. I focus on web-based design and development, including UI/UX design, front-end and back-end
+              development, and exploring AI development for smarter and more efficient systems.
+            </p>
+            <p class="reveal d3 text-olive/70 dark:text-sand leading-relaxed mb-8">
+              I also enjoy creating visual content that helps bring ideas to life. As a student, I'm continuously
+              learning and improving my skills to build clean, functional, and user-friendly applications that solve
+              real problems.
+            </p>
+            <div class="reveal d4">
+              <p class="text-xs font-medium text-olive/70 dark:text-sand uppercase tracking-widest mb-3">Stack &amp;
+                tools</p>
+              <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">Figma</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">HTML
+                  / CSS</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">JavaScript</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">Laravel</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">Cursor.ai</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">Google
+                  Colab</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">MySQL</span>
+                <span role="listitem"
+                  class="stag text-sm bg-cream dark:bg-neutral-800 border border-sand dark:border-neutral-600 text-ink dark:text-sand px-3.5 py-1.5 rounded-full hover:border-accent">phpMyAdmin</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === CERTIFICATES === -->
+    <section id="certificates" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="max-w-2xl mb-12">
+          <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Credentials</p>
+          <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-ink dark:text-cream leading-tight mb-4">
+            Certificates &amp; achievements</h2>
+          <p class="reveal d2 text-olive/70 dark:text-sand leading-relaxed">
+            Training and certifications I've earned — click a card to view the full certificate.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Certificates">
+          <template x-for="cert in certItems" :key="cert.id">
+            <button type="button" role="listitem" @click="openCert(cert)"
+              class="cert-card card-h reveal group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream dark:focus-visible:ring-offset-dark-bg">
+              <div class="cert-card__thumb">
+                <img :src="cert.src" :alt="cert.title + ' certificate'" loading="lazy">
+              </div>
+              <div class="p-5">
+                <p class="text-xs font-medium text-accent tracking-wide mb-1.5" x-text="cert.year"></p>
+                <h3
+                  class="font-display font-bold text-lg text-ink dark:text-cream mb-1 group-hover:text-accent transition-colors"
+                  x-text="cert.title"></h3>
+                <p class="text-sm text-olive/70 dark:text-sand" x-text="cert.issuer"></p>
+                <span
+                  class="inline-flex items-center gap-1 mt-3 text-xs font-medium text-olive/70 dark:text-sand group-hover:text-accent transition-colors">
+                  View certificate
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </div>
+            </button>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- === CONTACT === -->
+    <section id="contact" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div
+          class="bg-olive dark:bg-neutral-950 rounded-3xl p-10 md:p-16 relative overflow-hidden border dark:border-neutral-800">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"></div>
+          <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"
+            aria-hidden="true"></div>
+
+          <div class="relative z-10 grid md:grid-cols-2 gap-12 items-start">
+
+            <div>
+              <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Get in touch</p>
+              <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">Let's
+                work<br>together</h2>
+              <p class="reveal d2 text-olive/60 dark:text-neutral-400 leading-relaxed mb-8">Open to collaborations,
+                internships, and project inquiries — web design, development, or creative work. Send a message and let's
+                talk.</p>
+
+              <div class="reveal d3 flex flex-col gap-4">
+                <a href="mailto:rakk3129@gmail.com"
+                  class="group flex items-center gap-3 text-white hover:text-cream transition-colors">
+                  <span
+                    class="w-9 h-9 flex items-center justify-center bg-white/10 border border-white/20 rounded-lg group-hover:bg-white/20 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  <span class="text-sm">rakk3129@gmail.com</span>
+                </a>
+                <a href="https://www.facebook.com/jemuel.libago" rel="noopener noreferrer" target="_blank"
+                  aria-label="Facebook"
+                  class="group flex items-center gap-3 text-white hover:text-cream transition-colors">
+                  <span
+                    class="w-9 h-9 flex items-center justify-center bg-white/10 border border-white/20 rounded-lg group-hover:bg-white/20 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                  </span>
+                  <span class="text-sm">facebook.com/jemuel.libago</span>
+                </a>
+                <a href="https://www.instagram.com/jemuel.libago" rel="noopener noreferrer" target="_blank"
+                  aria-label="Instagram"
+                  class="group flex items-center gap-3 text-white hover:text-cream transition-colors">
+                  <span
+                    class="w-9 h-9 flex items-center justify-center bg-white/10 border border-white/20 rounded-lg group-hover:bg-white/20 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                  </span>
+                  <span class="text-sm">instagram.com/jemuel.libago</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="reveal d2">
+              <form @submit.prevent="submitContact" novalidate>
+                <input type="text" name="_honey" x-model="contact.honey" class="hidden" tabindex="-1" autocomplete="off"
+                  aria-hidden="true">
+                <div class="flex flex-col gap-4">
+                  <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label for="fname"
+                        class="block text-xs font-medium text-olive/60 dark:text-neutral-400 mb-1.5">Name <span
+                          aria-hidden="true">*</span></label>
+                      <input type="text" id="fname" name="name" x-model="contact.name" placeholder="Your name" required
+                        autocomplete="name"
+                        class="w-full bg-olive/80 dark:bg-neutral-900 border border-sage/40 dark:border-neutral-700 text-white text-sm rounded-xl px-4 py-3 placeholder-sand/50 dark:placeholder-neutral-500 focus:outline-none focus:border-accent transition-colors">
+                    </div>
+                    <div>
+                      <label for="femail"
+                        class="block text-xs font-medium text-olive/60 dark:text-neutral-400 mb-1.5">Email <span
+                          aria-hidden="true">*</span></label>
+                      <input type="email" id="femail" name="email" x-model="contact.email" placeholder="you@email.com"
+                        required autocomplete="email"
+                        class="w-full bg-olive/80 dark:bg-neutral-900 border border-sage/40 dark:border-neutral-700 text-white text-sm rounded-xl px-4 py-3 placeholder-sand/50 dark:placeholder-neutral-500 focus:outline-none focus:border-accent transition-colors">
+                    </div>
+                  </div>
+                  <div>
+                    <label for="fsubject"
+                      class="block text-xs font-medium text-olive/60 dark:text-neutral-400 mb-1.5">Subject</label>
+                    <input type="text" id="fsubject" name="subject" x-model="contact.subject"
+                      placeholder="Project inquiry"
+                      class="w-full bg-olive/80 dark:bg-neutral-900 border border-sage/40 dark:border-neutral-700 text-white text-sm rounded-xl px-4 py-3 placeholder-sand/50 dark:placeholder-neutral-500 focus:outline-none focus:border-accent transition-colors">
+                  </div>
+                  <div>
+                    <label for="fmessage"
+                      class="block text-xs font-medium text-olive/60 dark:text-neutral-400 mb-1.5">Message <span
+                        aria-hidden="true">*</span></label>
+                    <textarea id="fmessage" name="message" x-model="contact.message" rows="4"
+                      placeholder="Tell me about your project..." required
+                      class="w-full bg-olive/80 dark:bg-neutral-900 border border-sage/40 dark:border-neutral-700 text-white text-sm rounded-xl px-4 py-3 placeholder-sand/50 dark:placeholder-neutral-500 focus:outline-none focus:border-accent transition-colors resize-none"></textarea>
+                  </div>
+                  <p x-show="contactStatus === 'success'" x-cloak role="status"
+                    class="text-sm text-cream bg-accent/30 border border-sage/40 rounded-xl px-4 py-3">
+                    Message sent! I'll get back to you soon.
+                  </p>
+                  <p x-show="contactStatus === 'error'" x-cloak role="alert"
+                    class="text-sm text-cream bg-red-900/40 border border-red-400/40 rounded-xl px-4 py-3"
+                    x-text="contactError"></p>
+                  <button type="submit" :disabled="contactStatus === 'sending'"
+                    class="shimmer w-full bg-accent text-cream font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                    <span x-text="contactStatus === 'sending' ? 'Sending…' : 'Send message'"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Certificate modal -->
+  <div x-show="certModal.open" x-cloak x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0" class="work-modal" role="dialog" aria-modal="true" :aria-label="certModal.title"
+    @keydown.escape.window="closeCert()">
+    <button type="button" class="work-modal__backdrop" aria-label="Close" @click="closeCert()"></button>
+    <div class="work-modal__panel" @click.stop x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-95">
+      <div
+        class="flex items-center justify-between gap-4 px-5 py-4 border-b border-sand dark:border-neutral-700 shrink-0">
+        <div>
+          <p class="text-xs font-medium text-accent mb-0.5" x-text="certModal.year"></p>
+          <h3 class="font-display font-bold text-xl text-ink dark:text-cream" x-text="certModal.title"></h3>
+        </div>
+        <button type="button" @click="closeCert()"
+          class="w-10 h-10 flex items-center justify-center rounded-full border border-sand dark:border-neutral-600 text-ink dark:text-cream hover:bg-sand/50 dark:hover:bg-neutral-800 transition-colors shrink-0"
+          aria-label="Close">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="cert-modal__media work-modal__media p-4 md:p-6">
+        <img :src="certModal.src" :alt="certModal.title + ' certificate'">
+      </div>
+      <div class="px-5 py-4 border-t border-sand dark:border-neutral-700 shrink-0">
+        <p class="text-sm text-olive/70 dark:text-sand" x-text="certModal.issuer"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Work detail modal -->
+  <div x-show="workModal.open" x-cloak x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0" class="work-modal" role="dialog" aria-modal="true" :aria-label="workModal.title"
+    @keydown.escape.window="closeWork()">
+    <button type="button" class="work-modal__backdrop" aria-label="Close" @click="closeWork()"></button>
+    <div class="work-modal__panel" @click.stop x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-95">
+      <div
+        class="flex items-center justify-between gap-4 px-5 py-4 border-b border-sand dark:border-neutral-700 shrink-0">
+        <h3 class="font-display font-bold text-xl text-ink dark:text-cream" x-text="workModal.title"></h3>
+        <button type="button" @click="closeWork()"
+          class="w-10 h-10 flex items-center justify-center rounded-full border border-sand dark:border-neutral-600 text-ink dark:text-cream hover:bg-sand/50 dark:hover:bg-neutral-800 transition-colors"
+          aria-label="Close">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="work-modal__media p-4 md:p-6">
+        <img :src="workModal.src" :alt="workModal.title">
+      </div>
+      <div class="px-5 py-4 border-t border-sand dark:border-neutral-700 shrink-0">
+        <div class="flex flex-wrap gap-2 mb-3">
+          <template x-for="tag in workModal.tags" :key="tag">
+            <span
+              class="text-xs bg-sand/50 dark:bg-neutral-800 text-accent border border-sand dark:border-neutral-600 px-3 py-1 rounded-full"
+              x-text="tag"></span>
+          </template>
+        </div>
+        <p class="text-sm text-olive/70 dark:text-sand leading-relaxed" x-text="workModal.description"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-sand dark:border-neutral-800">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <p class="text-sm text-olive/60">&copy; <span id="yr"></span> Jemuel. All rights reserved. <br> Developed by <span
+          class="font-bold">jemuel libago</span></p>
+    </div>
+  </footer>
+
+  <script src="js/contact.js"></script>
+  <script src="js/certificates.js"></script>
+  <script>
+    function app() {
+      return {
+        dark: false,
+        mm: false,
+        sc: false,
+        s: 'hero',
+        ...createContactForm(),
+        ...createCertificates(),
+        workModal: { open: false, title: '', description: '', src: '', tags: [] },
+        workItems: [
+          { id: 1, title: 'Web-Based Design', description: 'Modern, responsive web layouts and visual systems built for clarity and usability.', src: 'img/work/webdes_work.png', tags: ['Web design', 'Figma'] },
+          { id: 2, title: 'Web Development', description: 'Production-ready sites with semantic HTML, Tailwind CSS, and Alpine.js.', src: 'img/work/webdev_work.png', tags: ['Front-end'] },
+          { id: 3, title: 'UI/UX Design', description: 'User flows, wireframes, and prototypes focused on intuitive experiences.', src: 'img/work/ui-ux_work.png', tags: ['UI/UX', 'Figma'] },
+          { id: 4, title: 'Back-End Development', description: 'Server-side logic, databases, and APIs for secure, scalable applications.', src: 'img/work/backend_work.png', tags: ['Back-end', 'API'] },
+          { id: 5, title: 'AI Development', description: 'AI-powered features and smart workflows integrated into modern products.', src: 'img/work/AI-work.png', tags: ['AI', 'Automation'] },
+          { id: 6, title: 'DNSC DJAL — Event Coverage', description: 'Seminar and workshop photography — capturing presentations, audiences, and on-site moments.', src: 'img/work/fb4aee28-0fd3-4675-b2a1-964bcc148b6d.jpg', tags: ['Photography', 'Events'] },
+          { id: 7, title: 'DNSC DJAL — On Assignment', description: 'Behind-the-scenes event photography documenting speakers and campus sessions.', src: 'img/work/week4-libago1.jpg', tags: ['Photography', 'Visual'] }
+        ],
+
+        openWork(item) {
+          this.workModal = { open: true, title: item.title, description: item.description, src: item.src, tags: item.tags };
+          document.body.style.overflow = 'hidden';
+        },
+
+        closeWork() {
+          this.workModal.open = false;
+          document.body.style.overflow = '';
+        },
+
+        init() {
+          // dark mode
+          this.dark = localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+
+          // scroll
+          window.addEventListener('scroll', () => {
+            this.sc = window.scrollY > 20;
+            this.updateSection();
+          }, { passive: true });
+
+          // reveal
+          const observeReveal = () => {
+            const io = new IntersectionObserver(entries => {
+              entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+          };
+          observeReveal();
+          this.$nextTick(observeReveal);
+
+          // year
+          document.getElementById('yr').textContent = new Date().getFullYear();
+        },
+
+        updateSection() {
+          const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+          if (atBottom) { this.s = 'contact'; return; }
+          const ids = ['contact', 'certificates', 'about', 'work', 'services', 'hero'];
+          for (const id of ids) {
+            const el = document.getElementById(id);
+            if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
+          }
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>
